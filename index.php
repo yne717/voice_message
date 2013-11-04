@@ -1,6 +1,6 @@
 <?php
 require('lib/twilio/Services/Twilio.php');
-test
+
 $response = new Services_Twilio_Twiml();
 
 if (isset($_REQUEST['Digits'])){
@@ -22,10 +22,10 @@ if (isset($_REQUEST['Digits'])){
            $gather->say('1か2か9を押せって言ったじゃないの。やりなおし。', array('language' => 'ja-jp'));
            break ;
    }
-} else {   
+} else {
            $gather = $response->gather(array('numDigits' => 1, 'timeout' => '10'));
-           $gather->say("請求金額の確認をします。今月のご利用料金は 1 を、
-                    先月のご利用 料金は 2 を、終わるときは 9 を押しなさい。", array('language' => 'ja-jp'));
+           $gather->say("お電話有難うございます。おおつるさん、やなぎもとさんへのメッセージを受付しております。
+                    ぴーっと音がなった後にメッセージをお願い致します。それではどうぞ", array('language' => 'ja-jp'));
 }
    
 print $response;
