@@ -8,7 +8,7 @@ $client = new Services_Twilio($id['sid'], $id['at']);
 $response = new Services_Twilio_Twiml();
 
 if (isset($_REQUEST['Digits'])) {
-	error_log($_REQUEST);
+	error_log($_REQUEST['From']);
 	$input = $_REQUEST['Digits'];
 	switch ($input) {
 		//録音
