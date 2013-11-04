@@ -1,5 +1,5 @@
 <?php
-require('twilio/Services/Twilio.php');
+require('lib/twilio/Services/Twilio.php');
 
 $response = new Services_Twilio_Twiml();
  
