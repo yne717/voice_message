@@ -30,9 +30,6 @@ if (isset($_REQUEST['Digits'])) {
 	$gather = $response -> gather(array('numDigits' => 1, 'timeout' => '10'));
 	$gather -> say("お電話有難うございます。おおつるさん、やなぎもとさんへのメッセージを受付しております。
             ぴーっと音がなった後にメッセージをお願い致します。それではどうぞ", array('language' => 'ja-jp'));
-			
-	
-
 }
 
 print $response;
