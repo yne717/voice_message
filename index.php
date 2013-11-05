@@ -1,14 +1,17 @@
 <?php
 require ('lib/twilio/Services/Twilio.php');
 require ('config/config.php');
+require ('logic/TwilioLogic.php');
 
 $config = new config();
 $id = $config->getTwilioId();
+
 $client = new Services_Twilio($id['sid'], $id['at']);
 $response = new Services_Twilio_Twiml();
 
+$logic = new TwilioLogic($client, $response);
+
 if (isset($_REQUEST['Digits'])) {
-	error_log($_REQUEST['From']);
 	$input = $_REQUEST['Digits'];
 	switch ($input) {
 		//録音
@@ -32,9 +35,6 @@ if (isset($_REQUEST['Digits'])) {
 	print $response;
 	
 } else {
-	$gather = $response -> gather(array('numDigits' => 1, 'timeout' => '20'));
-	$gather -> say("お電話有難うございます。おおつるさん、やなぎもとさんへのメッセージを受付しております。
-            ボイスメッセージを登録する場合は１を、登録したボイスメッセージの確認は２を、もう一度再生する場合は３を押してください。", array('language' => 'ja-jp'));
-	print $response;
-	
+	$result = $logic->firstContact();
+	echo $result;
 }
