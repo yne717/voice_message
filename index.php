@@ -12,7 +12,7 @@ $response = new Services_Twilio_Twiml();
 $logic = new TwilioLogic($client, $response);
 
 if (isset($_REQUEST['Digits'])) {
-	error_log(print_r($logic->getParam()));
+	// error_log(print_r($logic->getParam()));
 	$input = $_REQUEST['Digits'];
 	switch ($input) {
 		//録音
