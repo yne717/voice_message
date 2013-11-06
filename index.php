@@ -13,8 +13,7 @@ $logic = new TwilioLogic($client, $response);
 
 if (isset($_REQUEST['Digits'])) {
 	
-	$log = $logic->getParam();
-	error_log(print_r($log, true));
+	error_log(print_r($logic->getParam(), true));
 	
 	$input = $_REQUEST['Digits'];
 	switch ($input) {
