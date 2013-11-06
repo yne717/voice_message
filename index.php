@@ -13,8 +13,8 @@ $logic = new TwilioLogic($client, $response);
 
 if (isset($_REQUEST['Digits'])) {
 	
+	error_log('********************exist Digits**********************');
 	error_log(print_r($logic->getParam(), true));
-	
 	$input = $_REQUEST['Digits'];
 	switch ($input) {
 		//録音
