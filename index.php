@@ -12,7 +12,6 @@ $response = new Services_Twilio_Twiml();
 $logic = new TwilioLogic($client, $response);
 
 if (isset($_REQUEST['Digits'])) {
-	// error_log(print_r($logic->getParam()));
 	$input = $_REQUEST['Digits'];
 	switch ($input) {
 		//録音
@@ -34,6 +33,7 @@ if (isset($_REQUEST['Digits'])) {
 			break;
 	}
 	print $response;
+	error_log(print_r($logic->getParam()));
 	
 } else {
 	$result = $logic->firstContact();
