@@ -26,7 +26,9 @@ class TwilioUtil{
 	public function getParam($key = null) {
 		$result = null;
 		if (!empty($key)) {
-			$result = $this->_param[$key];
+			if (!empty($this->_param[$key])) {
+				$result = $this->_param[$key];
+			}
 		} else {
 			$result = $this->_param;
 		}

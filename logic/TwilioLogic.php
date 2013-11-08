@@ -15,9 +15,16 @@ class TwilioLogic extends TwilioUtil{
 	            // 発信音の後にメッセージ、お名前をお願い致します。それではどうぞ。", array('language' => 'ja-jp'));
 		// return $this->_response;
 		$response = $this->getTwiml();
-		$response->say("お電話有難うございます。おおつるさん、やなぎもとさんへのメッセージを受付しております。
-			発信音の後にメッセージ、お名前をお願い致します。終了したい場合は9を押してください。それではどうぞ。", array('language' => 'ja-jp'));
-		$response->record(array('maxLength' => '10', 'finishOnKey' => '9', 'action' => ''));
+		$response->say("おでんわありがとうございます。おおつるさん、やなぎもとさんへのメッセージをうけつけしております。
+			はっしんおんのあとにメッセージ、おなまえをおねがいいたします。しゅうりょうしたいばあいは9をおしてください。それではどうぞ。", array('language' => 'ja-jp'));
+		$response->record(array('maxLength' => '60', 'finishOnKey' => '9', 'action' => './completed_record.php'));
+		return $response;
+	}
+	
+	public function completedRecord() {
+		$response = $this->getTwiml();
+		$response->say("ありがとう", array('language' => 'ja-jp'));
+		$response->hangup();
 		return $response;
 	}
 }
