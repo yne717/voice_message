@@ -20,6 +20,7 @@ class TwilioUtil{
 		foreach ($_REQUEST as $key => $value) {
 			$this->_param[$key] = $value;
 		}
+		error_log(print_r($this->_param));
 	}
 		
 	//パラメータ取得
