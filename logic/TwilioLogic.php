@@ -13,7 +13,7 @@ class TwilioLogic extends TwilioUtil{
 		$response = $this->getTwiml();
 		$response->say("おでんわありがとうございます。おおつるさん、やなぎもとさんへのメッセージをうけつけしております。
 			はっしんおんのあとにメッセージ、おなまえをおねがいいたします。しゅうりょうしたいばあいは9をおしてください。それではどうぞ。", array('language' => 'ja-jp'));
-		$response->record(array('maxLength' => '60', 'finishOnKey' => '9', 'action' => './completed_record.php?completed=1'));
+		$response->record(array('maxLength' => '60', 'finishOnKey' => '9', 'action' => '/VM/completed_record.php?completed=1'));
 		return $response;
 	}
 	
@@ -21,7 +21,7 @@ class TwilioLogic extends TwilioUtil{
 	public function recordAgain() {
 		$response = $this->getTwiml();
 		$response->say("はっしんおんのあとにメッセージ、おなまえをおねがいいたします。しゅうりょうしたいばあいは9をおしてください。それではどうぞ。", array('language' => 'ja-jp'));
-		$response->record(array('maxLength' => '60', 'finishOnKey' => '9', 'action' => './completed_record.php?completed=1'));
+		$response->record(array('maxLength' => '60', 'finishOnKey' => '9', 'action' => '/VM/completed_record.php?completed=1'));
 		return $response;
 	}
 	

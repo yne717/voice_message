@@ -8,6 +8,8 @@ class TwilioUtil{
 	public $_client = null;
 	public $_id = array();
 	public $_param = array();
+	public $_param_get = array();
+	public $_param_post = array();
 	public $_special_phone_number = array();
 	
 	function __construct(){
@@ -17,11 +19,21 @@ class TwilioUtil{
 		//twilioインスタンス取得
 		$this->_client = new Services_Twilio($this->_id['sid'], $this->_id['at']);
 		//param取得
-		foreach ($_REQUEST as $key => $value) {
-			$this->_param[$key] = $value;
+		if (!empty($_GET)) {
+			foreach ($_GET as $key => $value) {
+				$this->_param[$key] = $value;
+				$this->_param_get[$key] = $value;
+			}
 		}
+		if (!empty($_POST)) {
+			foreach ($_POST as $key => $value) {
+				$this->_param[$key] = $value;
+				$this->_param_post[$key] = $value;
+			}
+		}		
 		error_log(print_r($_SERVER['REQUEST_URI'], true));
-		error_log(print_r($this->_param, true));
+		error_log(print_r($this->_param_get, true));
+		error_log(print_r($this->_param_post, true));
 	}
 		
 	//パラメータ取得
