@@ -30,7 +30,7 @@ class TwilioLogic extends TwilioUtil{
 		$response = $this->getTwiml();
 		$gather = $response->gather(array('numDigits' => 1, 'timeout' => '20'));
 		$gather->say("ろくおんがかんりょうしました。メッセージをろくおんしなおすばあいは1を、しゅうりょうするばあいは9をおしてください", array('language' => 'ja-jp'));
-		return $gather;
+		return $response;
 	}
 	
 	//completed_record.php　録音完了後の終了コンタクト
