@@ -36,7 +36,7 @@ class TwilioLogic extends TwilioUtil{
 	//completed_record.php　録音完了後の終了コンタクト
 	public function completedRecordEnd() {
 		$response = $this->getTwiml();
-		$response->say("あなたのメッセージはごじつおふたりにおとどけいたします。ごきょうりょくありがとうございました。", array('language' => 'ja-jp'));
+		$response->say("あなたのメッセージはごじつ、おふたりにおとどけいたします。ごきょうりょくありがとうございました。", array('language' => 'ja-jp'));
 		$response->hangup();
 		return $response;
 	}
