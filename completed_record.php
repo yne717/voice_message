@@ -5,9 +5,15 @@ require ('logic/TwilioLogic.php');
 $logic = new TwilioLogic();
 $digits = $logic->getParam('Digits');
 
-if (empty($completed)) {
-
+if (!empty($digits) && $digits === '#') {
+	
+	$response = $logic->completedRecordCheack();
+	echo $response;
+	
+} else {
+	
 	switch ($digits) {
+		
 		case 1:
 			
 			header("HTTP/1.1 301 Moved Permanently");
@@ -28,7 +34,4 @@ if (empty($completed)) {
 			break;
 	}
 	
-} else {
-	$response = $logic->completedRecordCheack();
-	echo $response;
 }
