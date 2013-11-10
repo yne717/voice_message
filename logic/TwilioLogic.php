@@ -13,7 +13,7 @@ class TwilioLogic extends TwilioUtil{
 		$response = $this->getTwiml();
 		$response->say("おでんわありがとうございます。おおつるさん、やなぎもとさんへのメッセージをうけつけしております。
 			はっしんおんのあとにメッセージ、おなまえをおねがいいたします。しゅうりょうしたいばあいは9をおしてください。それではどうぞ。", array('language' => 'ja-jp'));
-		$response->record(array('maxLength' => '60', 'finishOnKey' => '9', 'action' => './completed_record.php'));
+		$response->record(array('maxLength' => '60', 'finishOnKey' => '9', 'action' => 'completed_record.php?completed=1'));
 		return $response;
 	}
 	
@@ -21,21 +21,21 @@ class TwilioLogic extends TwilioUtil{
 	public function recordAgain() {
 		$response = $this->getTwiml();
 		$response->say("はっしんおんのあとにメッセージ、おなまえをおねがいいたします。しゅうりょうしたいばあいは9をおしてください。それではどうぞ。", array('language' => 'ja-jp'));
-		$response->record(array('maxLength' => '60', 'finishOnKey' => '9'));
+		$response->record(array('maxLength' => '60', 'finishOnKey' => '9', 'action' => 'completed_record.php?completed=1'));
 		return $response;
 	}
 	
 	//completed_record.php　録音完了後の確認コンタクト
 	public function completedRecordCheack() {
 		$gather = $this->getTwiml()->gather(array('numDigits' => 1, 'timeout' => '20'));
-		$gather->say("ろくおんがかんりょうしました。めっせーじをろくおんしなおすばあいは1を、しゅうりょうするばあいは9をおしてください", array('language' => 'ja-jp'));
+		$gather->say("ろくおんがかんりょうしました。メッセージをろくおんしなおすばあいは1を、しゅうりょうするばあいは9をおしてください", array('language' => 'ja-jp'));
 		return $gather;
 	}
 	
 	//completed_record.php　録音完了後の終了コンタクト
 	public function completedRecordEnd() {
 		$response = $this->getTwiml();
-		$response->say("ごじつあなたのめっせーじをおふたりにおとどけいたします。ごきょうりょくありがとうございました。", array('language' => 'ja-jp'));
+		$response->say("ごじつあなたのメッセージをおふたりにおとどけいたします。ごきょうりょくありがとうございました。", array('language' => 'ja-jp'));
 		$response->hangup();
 		return $response;
 	}

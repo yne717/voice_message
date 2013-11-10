@@ -3,9 +3,10 @@
 require ('logic/TwilioLogic.php');
 
 $logic = new TwilioLogic();
+$completed = $logic->getParam('completed');
 $digits = $logic->getParam('Digits');
 
-if (!empty($digits)) {
+if (empty($completed)) {
 
 	switch ($digits) {
 		case 1:
