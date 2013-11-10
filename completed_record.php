@@ -3,7 +3,6 @@
 require ('logic/TwilioLogic.php');
 
 $logic = new TwilioLogic();
-$completed = $logic->getParam('completed');
 $digits = $logic->getParam('Digits');
 
 if (empty($completed)) {
