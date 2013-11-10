@@ -27,7 +27,8 @@ class TwilioLogic extends TwilioUtil{
 	
 	//completed_record.php　録音完了後の確認コンタクト
 	public function completedRecordCheack() {
-		$gather = $this->getTwiml()->gather(array('numDigits' => 1, 'timeout' => '20'));
+		$response = $this->getTwiml();
+		$gather = $response->gather(array('numDigits' => 1, 'timeout' => '20'));
 		$gather->say("ろくおんがかんりょうしました。メッセージをろくおんしなおすばあいは1を、しゅうりょうするばあいは9をおしてください", array('language' => 'ja-jp'));
 		return $gather;
 	}
