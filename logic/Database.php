@@ -3,6 +3,7 @@
 class Database {
 	
 	protected $table = 'record_log';
+	protected $default_column = '*'; 
 	
 	function __construct() {
 		$config = new Config();
@@ -17,7 +18,7 @@ class Database {
 		}
 	}
 	
-	function insertLog($param = array()) {
+	public function insertLog($param = array()) {
 		if (empty($param)) {
 			return;
 		}
@@ -42,5 +43,24 @@ class Database {
 		
 		return $result;
 	}
+	
+	public function getLogOne($param = array()) {
+		if (!$param) {
+			return;
+		}
+		
+		$tmp_where_value = array();
+		foreach($param as $key => $value) {
+			$tmp_where_value[] = $key . '=' . $value;
+		}
+		$where_value = implode(' and ', $tmp_where_value);
+		$sql = 'SELECT ' . $this->default_column . ' FROM ' . $this->table . ' WHERE ' . $where_value . ';';
+		$tmp_result = mysql_query($sql);
+		$result = mysql_fetch_assoc($tmp_result);
+		
+		return $result;
+	}
+	
+	
 	
 }

@@ -6,6 +6,9 @@ require ('Database.php');
 
 class TwilioLogic extends TwilioUtil{
 	
+	public $file_type = '.mp3';
+	public $save_path = '/var/www/html/VM/record/';
+	
 	function __construct(){
 		parent::__construct();
 	}
@@ -57,8 +60,25 @@ class TwilioLogic extends TwilioUtil{
 		$result = $database->insertLog($param);
 	}
 	
-	public function saveRecordMp3($uri) {
+	//デフォルトはregister_flagが有効になっているもののみ
+	public function getLogOneByPhoneNumber($phone_number, $register_flag = 1) {
+		$database = new Database();
 		
+		$param['phone_number'] = $phone_number;
+		$param['register_flag'] = $register_flag;
+		$result = $database->getLogOne($param);
+		
+		return $result;
+	}
+	
+	public function saveRecordFile($log_id, $url) {
+		//mp3でダウンロード
+		$_url = $url . $this->file_type;
+		$_path = $this->save_path . $log_id . $this->file_type;
+		$command = 'wget -O ' . $_path . ' ' . $_url;
+		
+		$result = exec($command);
+		error_log($result);
 	}
 	
 	

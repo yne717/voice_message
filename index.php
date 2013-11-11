@@ -5,7 +5,6 @@ require ('logic/TwilioLogic.php');
 $logic = new TwilioLogic();
 
 //録音されているかチェック
-$logic->insert();
 
 //されていなければ録音
 $again = $logic->getParam('again');

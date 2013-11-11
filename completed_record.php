@@ -6,13 +6,16 @@ $logic = new TwilioLogic();
 $digits = $logic->getParam('Digits');
 
 if (!empty($digits) && $digits === '#') {
-	
+			
 	//db登録
 	$_param['phone_number'] = $logic->getParam('From');
 	$_param['record_uri'] = $logic->getParam('RecordingUrl');
 	$_param['register_flag'] = 1;
 	$logic->insertLog($_param);
-	
+	//lgo_id取得
+	$log = $logic->getLogOneByPhoneNumber($_param['phone_number']);
+	//ファイル取得
+	$logic->saveRecordFile($log['log_id'], $_param['record_uri']);
 	//レスポンス作成
 	$response = $logic->completedRecordCheack();
 	echo $response;
