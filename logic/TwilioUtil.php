@@ -1,7 +1,6 @@
 <?php
 
 require (dirname(__FILE__) . '/../lib/twilio/Services/Twilio.php');
-require (dirname(__FILE__) . '/../config/config.php');
 
 class TwilioUtil{
 	public $_config = null;

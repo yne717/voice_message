@@ -1,6 +1,8 @@
 <?php
 
+require (dirname(__FILE__) . '/../config/config.php');
 require ('TwilioUtil.php');
+require ('Database.php');
 
 class TwilioLogic extends TwilioUtil{
 	
@@ -39,6 +41,24 @@ class TwilioLogic extends TwilioUtil{
 		$response->say("あなたのメッセージはごじつ、おふたりにおとどけいたします。ごきょうりょくありがとうございました。", array('language' => 'ja-jp'));
 		$response->hangup();
 		return $response;
+	}
+	
+	//phone_number,record_uri,register_flagが必要
+	public function insertLog($_param = array()) {
+		$database = new Database();
+		
+		$param['log_id'] = null;
+		$param['phone_number'] = $_param['phone_number'];
+		$param['record_uri'] = $_param['record_uri'];
+		$param['register_flag'] = $_param['register_flag'];
+		$param['create_date'] = date("Y-m-d H:i:s");
+		$param['update_date'] = null;
+		
+		$result = $database->insertLog($param);
+	}
+	
+	public function saveRecordMp3($uri) {
+		
 	}
 	
 	
