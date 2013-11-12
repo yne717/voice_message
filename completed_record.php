@@ -6,6 +6,7 @@ $logic = new TwilioLogic();
 $digits = $logic->getParam('Digits');
 
 if (!empty($digits) && $digits === '#') {
+	// if(true) {
 			
 	//db登録
 	$_param['phone_number'] = $logic->getParam('From');

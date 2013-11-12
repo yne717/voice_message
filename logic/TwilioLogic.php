@@ -17,16 +17,20 @@ class TwilioLogic extends TwilioUtil{
 	public function record() {
 		$response = $this->getTwiml();
 		$response->say("おでんわありがとうございます。おおつるさん、やなぎもとさんへのメッセージをうけつけしております。
-			はっしんおんのあとにおなまえ、メッセージをおねがいいたします。ろくおんをとちゅうでしゅうりょうするばあいはシャープをおしてください。それではどうぞ。", array('language' => 'ja-jp'));
-		$response->record(array('maxLength' => '60', 'finishOnKey' => '#', 'action' => '/VM/completed_record.php'));
+			はっしんおんのあとにおなまえ、メッセージをおねがいいたします。ろくおんがかんりょうしましたらシャープをおしてください。それではどうぞ。", array('language' => 'ja-jp'));
+		$response->record(array('maxLength' => '30', 'finishOnKey' => '#', 'action' => '/VM/completed_record.php'));
+		$response->say("タイムアウトしました。もういちどさいしょからおねがいいたします。");
+		$response->hangup();
 		return $response;
 	}
 	
 	//index.php　再度録音開始コンタクト
 	public function recordAgain() {
 		$response = $this->getTwiml();
-		$response->say("はっしんおんのあとにおなまえ、メッセージをおねがいいたします。ろくおんをとちゅうでしゅうりょうするばあいはシャープをおしてください。それではどうぞ。", array('language' => 'ja-jp'));
-		$response->record(array('maxLength' => '60', 'finishOnKey' => '#', 'action' => '/VM/completed_record.php'));
+		$response->say("はっしんおんのあとにおなまえ、メッセージをおねがいいたします。ろくおんがかんりょうしましたらシャープをおしてください。それではどうぞ。", array('language' => 'ja-jp'));
+		$response->record(array('maxLength' => '30', 'finishOnKey' => '#', 'action' => '/VM/completed_record.php'));
+		$response->say("タイムアウトしました。もういちどさいしょからおねがいいたします。");
+		$response->hangup();
 		return $response;
 	}
 	
@@ -75,10 +79,10 @@ class TwilioLogic extends TwilioUtil{
 		//mp3でダウンロード
 		$_url = $url . $this->file_type;
 		$_path = $this->save_path . $log_id . $this->file_type;
-		$command = 'wget -O ' . $_path . ' ' . $_url;
+		// $command = 'wget -O ' . $_path . ' ' . $_url . ' >>' . $this->save_path . '.wget.log';
+		$command = 'nohup wget -O ' . $_path . ' ' . $_url . ' > /dev/null &';
 		
-		$result = exec($command);
-		error_log($result);
+		exec($command);
 	}
 	
 	
