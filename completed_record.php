@@ -38,8 +38,11 @@ if (!empty($digits) && $digits === '#') {
 			echo $response;
 			break;
 		
+		//入力がない　タイムアウト
 		default:
 			
+			$response = $logic->timeOut();
+			echo $response;
 			break;
 	}
 	
