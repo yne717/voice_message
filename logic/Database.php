@@ -30,8 +30,8 @@ class Database {
 		foreach ($param as $key => $value) {
 			$insert_key_array[] = $key;
 			$tmp_value = "null";
-			if (!empty($value)) {
-				$tmp_value = "'" . $value . "'";
+			if (!empty($value) || is_numeric($value)) {
+					$tmp_value = "'" . $value . "'";
 			}
 			$insert_value_array[] = $tmp_value;
 		}
@@ -44,6 +44,7 @@ class Database {
 		return $result;
 	}
 	
+	//insert_date降順で1件取得
 	public function getLogOne($param = array()) {
 		if (!$param) {
 			return;
@@ -54,10 +55,27 @@ class Database {
 			$tmp_where_value[] = $key . '=' . $value;
 		}
 		$where_value = implode(' and ', $tmp_where_value);
-		$sql = 'SELECT ' . $this->default_column . ' FROM ' . $this->table . ' WHERE ' . $where_value . ';';
+		$sql = 'SELECT ' . $this->default_column . ' FROM ' . $this->table . ' WHERE ' . $where_value . ' ORDER BY create_date DESC LIMIT 1;';
 		$tmp_result = mysql_query($sql);
 		$result = mysql_fetch_assoc($tmp_result);
 		
+		return $result;
+	}
+	
+	//register_flag=1にする
+	public function updateRegisterFlag($param) {
+		if (!$param){
+			return;
+		}
+		
+		$tmp_where_value = array();
+		foreach($param as $key => $value) {
+			$tmp_where_value[] = $key . '=' . $value;
+		}
+		$where_value = implode(' and ', $tmp_where_value);
+		$sql = 'UPDATE ' . $this->table . ' SET register_flag=1 WHERE ' . $where_value . ' ORDER BY create_date DESC LIMIT 1;';		
+		$tmp_result = mysql_query($sql);
+
 		return $result;
 	}
 	

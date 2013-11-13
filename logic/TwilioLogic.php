@@ -25,7 +25,7 @@ class TwilioLogic extends TwilioUtil{
 	public function record() {
 		$response = $this->getTwiml();
 		$response->say("おでんわありがとうございます。おおつるさん、やなぎもとさんへのメッセージをうけつけしております。
-			はっしんおんのあとにおなまえ、メッセージをおねがいいたします。ろくおんがかんりょうしましたらシャープをおしてください。それではどうぞ。", array('language' => 'ja-jp'));
+			はっしんおんのあとにおなまえ、メッセージをおねがいいたします。ろくおんがかんりょうしましたらシャープをおしてしゅうりょうしてください。それではどうぞ。", array('language' => 'ja-jp'));
 		$response->record(array('maxLength' => '30', 'finishOnKey' => '#', 'action' => '/VM/completed_record.php'));
 		$response->say("タイムアウトしました。もういちどさいしょからおねがいいたします。", array('language' => 'ja-jp'));
 		$response->hangup();
@@ -35,7 +35,7 @@ class TwilioLogic extends TwilioUtil{
 	//index.php　再度録音開始コンタクト
 	public function recordAgain() {
 		$response = $this->getTwiml();
-		$response->say("はっしんおんのあとにおなまえ、メッセージをおねがいいたします。ろくおんがかんりょうしましたらシャープをおしてください。それではどうぞ。", array('language' => 'ja-jp'));
+		$response->say("はっしんおんのあとにおなまえ、メッセージをおねがいいたします。ろくおんがかんりょうしましたらシャープをおしてしゅうりょうしてください。それではどうぞ。", array('language' => 'ja-jp'));
 		$response->record(array('maxLength' => '30', 'finishOnKey' => '#', 'action' => '/VM/completed_record.php'));
 		$response->say("タイムアウトしました。もういちどさいしょからおねがいいたします。", array('language' => 'ja-jp'));
 		$response->hangup();
@@ -72,8 +72,8 @@ class TwilioLogic extends TwilioUtil{
 		$result = $database->insertLog($param);
 	}
 	
-	//デフォルトはregister_flagが有効になっているもののみ
-	public function getLogOneByPhoneNumber($phone_number, $register_flag = 1) {
+	//デフォルトはregister_flagが0のデータ
+	public function getLogOneByPhoneNumber($phone_number, $register_flag = 0) {
 		$database = new Database();
 		
 		$param['phone_number'] = $phone_number;
@@ -81,6 +81,26 @@ class TwilioLogic extends TwilioUtil{
 		$result = $database->getLogOne($param);
 		
 		return $result;
+	}
+	
+	
+	public function updateRegisterFlagByPhoneNumber($phone_number, $register_flag = 0) {
+		$database = new Database();
+		
+		$param['phone_number'] = $phone_number;
+		$param['register_flag'] = $register_flag;
+		$result = $database->updateRegisterFlag($param);
+		
+		return $return;
+	}
+	
+	public function updateRegisterFlagByLogId($log_id) {
+		$database = new Database();
+		
+		$param['log_id'] = $log_id;
+		$result = $database->updateRegisterFlag($param);
+		
+		return $return;
 	}
 	
 	public function saveRecordFile($log_id, $url) {

@@ -11,12 +11,9 @@ if (!empty($digits) && $digits === '#') {
 	//db登録
 	$_param['phone_number'] = $logic->getParam('From');
 	$_param['record_uri'] = $logic->getParam('RecordingUrl');
-	$_param['register_flag'] = 1;
+	$_param['register_flag'] = 0;
 	$logic->insertLog($_param);
-	//lgo_id取得
-	$log = $logic->getLogOneByPhoneNumber($_param['phone_number']);
-	//ファイル取得
-	$logic->saveRecordFile($log['log_id'], $_param['record_uri']);
+
 	//レスポンス作成
 	$response = $logic->completedRecordCheack();
 	echo $response;
@@ -33,6 +30,18 @@ if (!empty($digits) && $digits === '#') {
 		
 		//終了
 		case 9:
+			
+			//番号取得
+			$from = $logic->getParam('From');
+			//lgo_id取得
+			$log = $logic->getLogOneByPhoneNumber($from, 0);
+			if (!$log) {
+				//エラーメッセージ
+			}
+			//ファイル取得
+			$logic->saveRecordFile($log['log_id'], $log['record_uri']);
+			//register_flag更新
+			$logic->updateRegisterFlagByLogId($log['log_id']);
 			
 			$response = $logic->completedRecordEnd();
 			echo $response;
