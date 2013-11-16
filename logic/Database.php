@@ -70,10 +70,19 @@ class Database {
 		
 		$tmp_where_value = array();
 		foreach($param as $key => $value) {
-			$tmp_where_value[] = $key . '=' . $value;
+			if ($key !== 'register_flag') {
+				$tmp_where_value[] = $key . '=' . $value;
+			}
 		}
 		$where_value = implode(' and ', $tmp_where_value);
-		$sql = 'UPDATE ' . $this->table . ' SET register_flag=1 WHERE ' . $where_value . ' ORDER BY create_date DESC LIMIT 1;';		
+		
+		if (empty($param['register_flag'])) {
+			$set = 'register_flag=0';
+		} else {
+			$set = 'register_flag=1';
+		}
+		
+		$sql = 'UPDATE ' . $this->table . ' SET ' . $set . ' WHERE ' . $where_value . ' ORDER BY create_date DESC LIMIT 1;';		
 		$tmp_result = mysql_query($sql);
 
 		return $result;

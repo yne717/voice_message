@@ -51,11 +51,33 @@ class TwilioLogic extends TwilioUtil{
 		return $response;
 	}
 	
+	public function indexRecordPlayCheck() {
+		$response = $this->getTwiml();
+		$gather = $response->gather(array('numDigits' => 1, 'timeout' => '10', 'action' => "/VM/play_record.php"));
+		$gather->say("おでんわありがとうございます。おあずかりしているメッセージをかくにんするばあいは1を、ろくおんしなおすばあいは9をおしてください。", array('language' => 'ja-jp'));
+		$response->say("タイムアウトしました。もういちどさいしょからおねがいいたします。", array('language' => 'ja-jp'));
+		$response->hangup();
+		return $response;
+	}
+	
+	public function playRecordMessage($url) {
+		$response = $this->getTwiml();
+		$response->play($url);
+		$gather = $response->gather(array('numDigits' => 1, 'timeout' => '10'));
+		$gather->say("メッセージをろくおんしなおすばあいは1を、しゅうりょうするばあいは9をおしてください", array('language' => 'ja-jp'));
+		$response->say("タイムアウトしました。もういちどさいしょからおねがいいたします。", array('language' => 'ja-jp'));
+		$response->hangup();
+		return $response;
+	}
+
+	
 	//completed_record.php　録音完了後の確認コンタクト
 	public function completedRecordCheack() {
 		$response = $this->getTwiml();
 		$gather = $response->gather(array('numDigits' => 1, 'timeout' => '10'));
 		$gather->say("ろくおんがかんりょうしました。メッセージをろくおんしなおすばあいは1を、しゅうりょうするばあいは9をおしてください", array('language' => 'ja-jp'));
+		$response->say("タイムアウトしました。もういちどさいしょからおねがいいたします。", array('language' => 'ja-jp'));
+		$response->hangup();
 		return $response;
 	}
 	
@@ -63,15 +85,6 @@ class TwilioLogic extends TwilioUtil{
 	public function completedRecordEnd() {
 		$response = $this->getTwiml();
 		$response->say("あなたのメッセージはごじつ、おふたりにおとどけいたします。ごきょうりょくありがとうございました。", array('language' => 'ja-jp'));
-		$response->hangup();
-		return $response;
-	}
-	
-	public function indexRecordPlayCheck() {
-		$response = $this->getTwiml();
-		$gather = $response->gather(array('numDigits' => 1, 'timeout' => '10'));
-		$gather->say("おでんわありがとうございます。おあずかりしているメッセージをかくにんするばあいは1を、ろくおんしなおすばあいは9をおしてください。", array('language' => 'ja-jp'));
-		$response->say("タイムアウトしました。もういちどさいしょからおねがいいたします。", array('language' => 'ja-jp'));
 		$response->hangup();
 		return $response;
 	}
@@ -118,10 +131,13 @@ class TwilioLogic extends TwilioUtil{
 		return $return;
 	}
 	
-	public function updateRegisterFlagByLogId($log_id) {
+	public function updateRegisterFlagByLogId($log_id, $register_flag = null) {
 		$database = new Database();
 		
 		$param['log_id'] = $log_id;
+		if (!is_null($register_flag)){
+			$param['register_flag'] = $register_flag;
+		}
 		$result = $database->updateRegisterFlag($param);
 		
 		return $return;

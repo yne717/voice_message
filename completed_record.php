@@ -20,16 +20,16 @@ if ($digits === '#') {
 	
 } else {
 	
-	switch ($digits) {
+	switch (true) {
 		//もう一度録音
-		case 1:
+		case $digits === '1':
 			
 			header("HTTP/1.1 301 Moved Permanently");
 			header('Location: http://' . $_SERVER['SERVER_NAME'] . '/VM/index.php?again=1');
 			break;
 		
 		//終了
-		case 9:
+		case $digits === '9':
 			
 			//番号取得
 			$from = $logic->getParam('From');
@@ -45,7 +45,7 @@ if ($digits === '#') {
 			//ファイル取得
 			$logic->saveRecordFile($log['log_id'], $log['record_uri']);
 			//register_flag更新
-			$logic->updateRegisterFlagByLogId($log['log_id']);
+			$logic->updateRegisterFlagByLogId($log['log_id'], 1);
 			
 			$response = $logic->completedRecordEnd();
 			echo $response;
@@ -53,9 +53,7 @@ if ($digits === '#') {
 		
 		//入力がない　タイムアウト
 		default:
-			
-			$response = $logic->timeOut();
-			echo $response;
+
 			break;
 	}
 	
