@@ -75,7 +75,7 @@ class TwilioLogic extends TwilioUtil{
 	public function completedRecordCheack() {
 		$response = $this->getTwiml();
 		$gather = $response->gather(array('numDigits' => 1, 'timeout' => '10'));
-		$gather->say("ろくおんがかんりょうしました。メッセージをろくおんしなおすばあいは1を、しゅうりょうするばあいは9をおしてください", array('language' => 'ja-jp'));
+		$gather->say("ろくおんがかんりょうしました。メッセージをろくおんしなおすばあいは1を、とうろくするばあいは9をおしてください", array('language' => 'ja-jp'));
 		$response->say("タイムアウトしました。もういちどさいしょからおねがいいたします。", array('language' => 'ja-jp'));
 		$response->hangup();
 		return $response;
