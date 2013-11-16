@@ -29,12 +29,19 @@ class TwilioLogic extends TwilioUtil{
 		
 		return $response;
 	}
+	
+	public function finish() {
+		$response = $this->getTwiml();
+		$response->hangup();
+		
+		return $response;
+	}
 
 	//index.php　録音開始コンタクト
 	public function index() {
 		$response = $this->getTwiml();
-		$response->say("おでんわありがとうございます。おおつるさん、やなぎもとさんへのメッセージをうけつけしております。
-			はっしんおんのあとにおなまえ、メッセージをおねがいいたします。ろくおんがかんりょうしましたらシャープをおしてしゅうりょうしてください。それではどうぞ。", array('language' => 'ja-jp'));
+		$response->say("おでんわありがとうございます。おおつるさん、ぐらっちょさんへのメッセージをうけつけしております。
+			はっしんおんのあとに、おなまえ、メッセージをおねがいします。ろくおんがかんりょうしましたらシャープをおしてしてください。それではどうぞ。", array('language' => 'ja-jp'));
 		$response->record(array('maxLength' => '30', 'finishOnKey' => '#', 'action' => '/VM/completed_record.php'));
 		$response->say("タイムアウトしました。もういちどさいしょからおねがいいたします。", array('language' => 'ja-jp'));
 		$response->hangup();
@@ -54,7 +61,7 @@ class TwilioLogic extends TwilioUtil{
 	public function indexRecordPlayCheck() {
 		$response = $this->getTwiml();
 		$gather = $response->gather(array('numDigits' => 1, 'timeout' => '10', 'action' => "/VM/play_record.php"));
-		$gather->say("おでんわありがとうございます。おあずかりしているメッセージをかくにんするばあいは1を、ろくおんしなおすばあいは9をおしてください。", array('language' => 'ja-jp'));
+		$gather->say("おでんわありがとうございます。おあずかりしているメッセージをかくにんするばあいは1を、ろくおんしなおすばあいは9をおしてください。しゅうりょうするばあいはそのままでんわをおきりください。", array('language' => 'ja-jp'));
 		$response->say("タイムアウトしました。もういちどさいしょからおねがいいたします。", array('language' => 'ja-jp'));
 		$response->hangup();
 		return $response;
@@ -63,8 +70,8 @@ class TwilioLogic extends TwilioUtil{
 	public function playRecordMessage($url) {
 		$response = $this->getTwiml();
 		$response->play($url);
-		$gather = $response->gather(array('numDigits' => 1, 'timeout' => '10'));
-		$gather->say("メッセージをろくおんしなおすばあいは1を、しゅうりょうするばあいは9をおしてください", array('language' => 'ja-jp'));
+		$gather = $response->gather(array('numDigits' => 1, 'timeout' => '10', 'action' => "/VM/play_record_after.php"));
+		$gather->say("メッセージをろくおんしなおすばあいは1を、しゅうりょうするばあいは9をおしてください。", array('language' => 'ja-jp'));
 		$response->say("タイムアウトしました。もういちどさいしょからおねがいいたします。", array('language' => 'ja-jp'));
 		$response->hangup();
 		return $response;

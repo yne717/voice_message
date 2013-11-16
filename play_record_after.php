@@ -7,20 +7,18 @@ $digits = $logic->getParam('Digits');
 
 switch (true) {
 	
-	//録音再生
-	case $digits === '1':
-		$from = $logic->getParam('From');
-		$log = $logic->getLogOneByPhoneNumber($from);
-		$response = $logic->playRecordMessage($log['record_uri']);
-		echo $response;
-		break;
-	
 	//録音しなおし
-	case $digits === '9':
+	case $digits === '1':
 		$from = $logic->getParam('From');
 		$logic->updateRegisterFlagByPhoneNumber($from, 0);
 		header("HTTP/1.1 301 Moved Permanently");
 		header('Location: http://' . $_SERVER['SERVER_NAME'] . '/VM/index.php?again=1');
+		break;
+	
+	//終了
+	case $digits === '9':
+		$response = $logic->finish();
+		echo $response;
 		break;
 	
 	//入力がない　タイムアウト
