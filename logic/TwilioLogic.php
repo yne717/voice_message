@@ -160,6 +160,21 @@ class TwilioLogic extends TwilioUtil{
 		exec($command);
 	}
 	
+	public function checkFileExist($log_id) {
+		$_path = $this->save_path . $log_id . $this->file_type;
+		return file_exists($_path);
+	}
+	
+	public function changeFileName($log_id) {
+		$_path = $this->save_path . $log_id . $this->file_type;
+		$_parh_after = $_path . '.' . date("mdGi");
+		$result = rename($_path, $_parh_after);
+		if (!$result) {
+			error_log('<error> failure file name change');
+		}
+		return $result;
+	}
+	
 	
 }
 
