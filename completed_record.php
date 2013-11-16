@@ -5,7 +5,7 @@ require ('logic/TwilioLogic.php');
 $logic = new TwilioLogic();
 $digits = $logic->getParam('Digits');
 
-if (!empty($digits) && $digits === '#') {
+if ($digits === '#') {
 	// if(true) {
 			
 	//db登録
@@ -34,10 +34,14 @@ if (!empty($digits) && $digits === '#') {
 			//番号取得
 			$from = $logic->getParam('From');
 			//lgo_id取得
-			$log = $logic->getLogOneByPhoneNumber($from, 0);
+			$log = $logic->getLogOneByPhoneNumber($from);
 			if (!$log) {
 				//エラーメッセージ
+				$error = $logic->error();
+				echo $error;
+				break;
 			}
+			
 			//ファイル取得
 			$logic->saveRecordFile($log['log_id'], $log['record_uri']);
 			//register_flag更新

@@ -20,9 +20,18 @@ class TwilioLogic extends TwilioUtil{
 		
 		return $response;
 	}
+	
+	public function error() {
+		$response = $this->getTwiml();
+		$response->say("エラーがはっせいしました。もういちどさいしょからおねがいいたします。", array('language' => 'ja-jp'));
+		$response->hangup();
+		error_log('<error> function error');
+		
+		return $response;
+	}
 
 	//index.php　録音開始コンタクト
-	public function record() {
+	public function index() {
 		$response = $this->getTwiml();
 		$response->say("おでんわありがとうございます。おおつるさん、やなぎもとさんへのメッセージをうけつけしております。
 			はっしんおんのあとにおなまえ、メッセージをおねがいいたします。ろくおんがかんりょうしましたらシャープをおしてしゅうりょうしてください。それではどうぞ。", array('language' => 'ja-jp'));
@@ -33,7 +42,7 @@ class TwilioLogic extends TwilioUtil{
 	}
 	
 	//index.php　再度録音開始コンタクト
-	public function recordAgain() {
+	public function indexAgain() {
 		$response = $this->getTwiml();
 		$response->say("はっしんおんのあとにおなまえ、メッセージをおねがいいたします。ろくおんがかんりょうしましたらシャープをおしてしゅうりょうしてください。それではどうぞ。", array('language' => 'ja-jp'));
 		$response->record(array('maxLength' => '30', 'finishOnKey' => '#', 'action' => '/VM/completed_record.php'));
@@ -58,6 +67,17 @@ class TwilioLogic extends TwilioUtil{
 		return $response;
 	}
 	
+	public function indexRecordPlayCheck() {
+		$response = $this->getTwiml();
+		$gather = $response->gather(array('numDigits' => 1, 'timeout' => '10'));
+		$gather->say("おでんわありがとうございます。おあずかりしているメッセージをかくにんするばあいは1を、ろくおんしなおすばあいは9をおしてください。", array('language' => 'ja-jp'));
+		$response->say("タイムアウトしました。もういちどさいしょからおねがいいたします。", array('language' => 'ja-jp'));
+		$response->hangup();
+		return $response;
+	}
+	
+	//***********************db**************************
+	
 	//phone_number,record_uri,register_flagが必要
 	public function insertLog($_param = array()) {
 		$database = new Database();
@@ -73,22 +93,26 @@ class TwilioLogic extends TwilioUtil{
 	}
 	
 	//デフォルトはregister_flagが0のデータ
-	public function getLogOneByPhoneNumber($phone_number, $register_flag = 0) {
+	public function getLogOneByPhoneNumber($phone_number, $register_flag = null) {
 		$database = new Database();
 		
 		$param['phone_number'] = $phone_number;
-		$param['register_flag'] = $register_flag;
+		if (!is_null($register_flag)){
+			$param['register_flag'] = $register_flag;
+		}
 		$result = $database->getLogOne($param);
 		
 		return $result;
 	}
 	
 	
-	public function updateRegisterFlagByPhoneNumber($phone_number, $register_flag = 0) {
+	public function updateRegisterFlagByPhoneNumber($phone_number, $register_flag = null) {
 		$database = new Database();
 		
 		$param['phone_number'] = $phone_number;
-		$param['register_flag'] = $register_flag;
+		if (!is_null($register_flag)){
+			$param['register_flag'] = $register_flag;
+		}
 		$result = $database->updateRegisterFlag($param);
 		
 		return $return;

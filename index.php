@@ -4,14 +4,23 @@ require ('logic/TwilioLogic.php');
 
 $logic = new TwilioLogic();
 
-//録音されているかチェック
+//log取得
+$phone_number = $logic->getParam('From');
+$log = $logic->getLogOneByPhoneNumber($phone_number);
 
-//されていなければ録音
-$again = $logic->getParam('again');
-if (empty($again)) {
-	$response = $logic->record();
+//録音されているかチェック
+if (!empty($log) && $log['register_flag'] === '1') {
+	$response = $logic->indexRecordPlayCheck();
 	echo $response;
+	
 } else {
-	$response = $logic->recordAgain();
-	echo $response;
+	//されていなければ録音
+	$again = $logic->getParam('again');
+	if (empty($again)) {
+		$response = $logic->index();
+		echo $response;
+	} else {
+		$response = $logic->indexAgain();
+		echo $response;
+	}
 }
