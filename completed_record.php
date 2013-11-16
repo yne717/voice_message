@@ -5,7 +5,7 @@ require ('logic/TwilioLogic.php');
 $logic = new TwilioLogic();
 $digits = $logic->getParam('Digits');
 
-if (!$empty($digits) && $digits === '#') {
+if (!empty($digits) && $digits === '#') {
 	// if(true) {
 			
 	//db登録
