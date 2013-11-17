@@ -40,8 +40,8 @@ class TwilioLogic extends TwilioUtil{
 	//index.php　録音開始コンタクト
 	public function index() {
 		$response = $this->getTwiml();
-		$response->say("おでんわありがとうございます。おおつるさん、ぐらっちょさんへのメッセージをうけつけしております。
-			はっしんおんのあとに、おなまえ、メッセージをおねがいします。ろくおんがかんりょうしましたらシャープをおしてしてください。それではどうぞ。", array('language' => 'ja-jp'));
+		$response->say("おでんわありがとうございます。おおつるさんたちへのメッセージをうけつけしております。
+			はっしんおんのあとに、おなまえ、メッセージをおねがいします。ろくおんがかんりょうしましたらシャープをおしてしゅうりょうしてください。それではどうぞ。", array('language' => 'ja-jp'));
 		$response->record(array('maxLength' => '30', 'finishOnKey' => '#', 'action' => '/VM/completed_record.php'));
 		$response->say("タイムアウトしました。もういちどさいしょからおねがいいたします。", array('language' => 'ja-jp'));
 		$response->hangup();
@@ -51,7 +51,7 @@ class TwilioLogic extends TwilioUtil{
 	//index.php　再度録音開始コンタクト
 	public function indexAgain() {
 		$response = $this->getTwiml();
-		$response->say("はっしんおんのあとにおなまえ、メッセージをおねがいいたします。ろくおんがかんりょうしましたらシャープをおしてしゅうりょうしてください。それではどうぞ。", array('language' => 'ja-jp'));
+		$response->say("はっしんおんのあとに、おなまえ、メッセージをおねがいいたします。ろくおんがかんりょうしましたらシャープをおしてしゅうりょうしてください。それではどうぞ。", array('language' => 'ja-jp'));
 		$response->record(array('maxLength' => '30', 'finishOnKey' => '#', 'action' => '/VM/completed_record.php'));
 		$response->say("タイムアウトしました。もういちどさいしょからおねがいいたします。", array('language' => 'ja-jp'));
 		$response->hangup();
@@ -133,9 +133,7 @@ class TwilioLogic extends TwilioUtil{
 		if (!is_null($register_flag)){
 			$param['register_flag'] = $register_flag;
 		}
-		$result = $database->updateRegisterFlag($param);
-		
-		return $return;
+		$database->updateRegisterFlag($param);
 	}
 	
 	public function updateRegisterFlagByLogId($log_id, $register_flag = null) {
@@ -145,9 +143,7 @@ class TwilioLogic extends TwilioUtil{
 		if (!is_null($register_flag)){
 			$param['register_flag'] = $register_flag;
 		}
-		$result = $database->updateRegisterFlag($param);
-		
-		return $return;
+		$database->updateRegisterFlag($param);
 	}
 	
 	public function saveRecordFile($log_id, $url) {
