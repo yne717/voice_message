@@ -33,7 +33,8 @@ switch (true) {
 	
 	//入力がない　タイムアウト
 	default:
-
+		$response = $logic->sayGatherElse(1, 9, '/VM/play_record.php');
+		echo $response;
 		break;
 }
 	

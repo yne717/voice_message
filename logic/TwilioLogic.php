@@ -36,6 +36,15 @@ class TwilioLogic extends TwilioUtil{
 		
 		return $response;
 	}
+	
+	public function sayGatherElse($number1, $number2, $url) {
+		$response = $this->getTwiml();
+		$gather = $response->gather(array('numDigits' => 1, 'timeout' => '10', 'action' => $url));
+		$gather->say($number1 . "か" . $number2 . "をおしてください。しゅうりょうするばあいはそのままでんわをおきりください。", array('language' => 'ja-jp'));
+		$response->say("タイムアウトしました。もういちどさいしょからおねがいいたします。", array('language' => 'ja-jp'));
+		
+		return $response;
+	}
 
 	//index.php　録音開始コンタクト
 	public function index() {
@@ -96,7 +105,7 @@ class TwilioLogic extends TwilioUtil{
 		return $response;
 	}
 	
-	//***********************db**************************
+	//*************************************************
 	
 	//phone_number,record_uri,register_flagが必要
 	public function insertLog($_param = array()) {
