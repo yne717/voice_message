@@ -84,8 +84,6 @@ class Database {
 		
 		$sql = 'UPDATE ' . $this->table . ' SET ' . $set . ' WHERE ' . $where_value . ' ORDER BY create_date DESC LIMIT 1;';		
 		$tmp_result = mysql_query($sql);
-
-		return $result;
 	}
 	
 	
