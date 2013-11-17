@@ -40,7 +40,7 @@ class TwilioLogic extends TwilioUtil{
 	public function sayGatherElse($number1, $number2, $url) {
 		$response = $this->getTwiml();
 		$gather = $response->gather(array('numDigits' => 1, 'timeout' => '10', 'action' => $url));
-		$gather->say($number1 . "か" . $number2 . "をおしてください。しゅうりょうするばあいはそのままでんわをおきりください。", array('language' => 'ja-jp'));
+		$gather->say($number1 . "、か、" . $number2 . "、をおしてください。しゅうりょうするばあいはそのままでんわをおきりください。", array('language' => 'ja-jp'));
 		$response->say("タイムアウトしました。もういちどさいしょからおねがいいたします。", array('language' => 'ja-jp'));
 		
 		return $response;
