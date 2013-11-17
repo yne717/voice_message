@@ -24,7 +24,6 @@ switch (true) {
 		$logic->updateRegisterFlagByLogId($log['log_id'], 0);
 		//ファイル名変更
 		$check = $logic->checkFileExist($log['log_id']);
-		error_log('*******checkFileExist******' . $check);
 		if ($check) {
 			$logic->changeFileName($log['log_id']);
 		} else {
