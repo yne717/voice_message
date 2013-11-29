@@ -9,7 +9,7 @@ class TwilioUtil{
 	public $_param = array();
 	public $_param_get = array();
 	public $_param_post = array();
-	public $_special_phone_number = array();
+	public $_sp_phone_number_start = array();
 	
 	function __construct(){
 		//sid,at取得
@@ -33,6 +33,8 @@ class TwilioUtil{
 		error_log(print_r($_SERVER['REQUEST_URI'], true));
 		error_log(print_r($this->_param_get, true));
 		error_log(print_r($this->_param_post, true));
+		
+		//
 	}
 		
 	//パラメータ取得
