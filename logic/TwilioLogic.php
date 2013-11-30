@@ -8,7 +8,8 @@ class TwilioLogic extends TwilioUtil{
 	
 	public $file_type = '.mp3';
 	public $save_path = '/var/www/html/VM/record/';
-	public $default_index_message = 'おでんわありがとうございます。おおつるさんたちへのメッセージをうけつけしております。';
+	public $default_start_message = 'おでんわありがとうございます。おおつるさんたちへのメッセージをうけつけしております。';
+	public $default_end_message = 'あなたのメッセージはごじつ、おふたりにおとどけいたします。ごきょうりょくありがとうございました。';
 	public $sp_phone_number_start = array();
 	public $sp_phone_number_end = array();
 
@@ -56,7 +57,10 @@ class TwilioLogic extends TwilioUtil{
 	//index.php　録音開始コンタクト
 	public function index() {
 		$response = $this->getTwiml();
-		$response->say("はっしんおんのあとに、おなまえ、メッセージをおねがいします。ろくおんがかんりょうしましたらシャープをおしてしゅうりょうしてください。それではどうぞ。", array('language' => 'ja-jp'));
+		
+		
+		
+		$response->say("はっしんおんのあとに、おなまえ、メッセージをおねがいします。かんりょうしましたらシャープをおしてしゅうりょうしてくださいね。ではどうぞ。", array('language' => 'ja-jp'));
 		$response->record(array('maxLength' => '30', 'finishOnKey' => '#', 'action' => '/VM/completed_record.php'));
 		$response->say("タイムアウトしました。もういちどさいしょからおねがいいたします。", array('language' => 'ja-jp'));
 		$response->hangup();
@@ -66,7 +70,7 @@ class TwilioLogic extends TwilioUtil{
 	//index.php　再度録音開始コンタクト
 	public function indexAgain() {
 		$response = $this->getTwiml();
-		$response->say("はっしんおんのあとに、おなまえ、メッセージをおねがいいたします。ろくおんがかんりょうしましたらシャープをおしてしゅうりょうしてくださいね。それではどうぞ。", array('language' => 'ja-jp'));
+		$response->say("はっしんおんのあとに、おなまえ、メッセージをおねがいします。ろくおんがかんりょうしましたらシャープをおしてしゅうりょうしてくださいね。それではどうぞ。", array('language' => 'ja-jp'));
 		$response->record(array('maxLength' => '30', 'finishOnKey' => '#', 'action' => '/VM/completed_record.php'));
 		$response->say("タイムアウトしました。もういちどさいしょからおねがいいたします。", array('language' => 'ja-jp'));
 		$response->hangup();
@@ -106,6 +110,10 @@ class TwilioLogic extends TwilioUtil{
 	//completed_record.php　録音完了後の終了コンタクト
 	public function completedRecordEnd() {
 		$response = $this->getTwiml();
+		
+		
+		
+		
 		$response->say("あなたのメッセージはごじつ、おふたりにおとどけいたします。ごきょうりょくありがとうございました。", array('language' => 'ja-jp'));
 		$response->hangup();
 		return $response;
