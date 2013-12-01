@@ -24,10 +24,7 @@ class TwilioUtil{
 				$this->_param[$key] = $value;
 				$this->_param_post[$key] = $value;
 			}
-		}		
-		error_log(print_r($_SERVER['REQUEST_URI'], true));
-		error_log(print_r($this->_param_get, true));
-		error_log(print_r($this->_param_post, true));
+		}
 		
 		//sid,at取得
 		$this->_config = new config();
