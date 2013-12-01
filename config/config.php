@@ -31,6 +31,7 @@ class Config {
 	public function getTwilioId() {
 		$config['sid'] = $this->sid;
 		$config['at'] = $this->at;
+		
 		return $config;
 	}
 	public function getDbParam() {
@@ -38,6 +39,7 @@ class Config {
 		$db_param['pass'] = $this->db_pass;
 		$db_param['select'] = $this->db_select;
 		$db_param['server'] = $this->db_server;
+		
 		return $db_param;
 	}
 	public function getSpPhoneNumber() {
