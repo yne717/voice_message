@@ -37,7 +37,7 @@ class Config {
 	
 	public function getTwilioId($to) {
 		//test以外はproductionでわたす
-		if ($to === $this->$test_my_phone_number) {
+		if ($to === $this->test_my_phone_number) {
 			$config['sid'] = $this->test_sid;
 			$config['at'] = $this->test_at;
 			error_log('test!!');
