@@ -1,8 +1,15 @@
 <?php
 
 class Config {
-	protected $sid = "AC62c895330386650fd7894ecd38c5f20e";
-	protected $at = "2a3e9222fa063a6981180bb2b0f5670b";
+	//test 815031595818
+	protected $test_my_phone_number = '+815031595818';
+	protected $test_sid = "AC62c895330386650fd7894ecd38c5f20e";
+	protected $test_at = "2a3e9222fa063a6981180bb2b0f5670b";
+	//production 815031596185
+	protected $production_my_phone_number = '+815031596185';
+	protected $production_sid = "ACbb8c6ee3c53e545cdd6573e10d6ee7c9";
+	protected $production_at = "5ba061932dd1a44efa1fe4108f43c388";
+		
 	protected $db_user = 'root';
 	protected $db_pass = '870717ry';
 	protected $db_select = 'VM';
@@ -28,10 +35,16 @@ class Config {
 									'+819027009846' => 'たけおさんがこのメッセージをきくと、きっとおおよろこびするとおもいますよ。いつまでもおしあわせに。'
 									);
 	
-	public function getTwilioId() {
-		$config['sid'] = $this->sid;
-		$config['at'] = $this->at;
-		
+	public function getTwilioId($to) {
+		//test以外はproductionでわたす
+		if ($to === $this->$test_my_phone_number) {
+			$config['sid'] = $this->test_sid;
+			$config['at'] = $this->test_at;
+			error_log('test!!');
+		} else {
+			$config['sid'] = $this->production_sid;
+			$config['at'] = $this->production_at;
+		}
 		return $config;
 	}
 	public function getDbParam() {

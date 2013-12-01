@@ -12,11 +12,6 @@ class TwilioUtil{
 	public $_sp_phone_number_start = array();
 	
 	function __construct(){
-		//sid,at取得
-		$this->_config = new config();
-		$this->_id = $this->_config->getTwilioId();
-		//twilioインスタンス取得
-		$this->_client = new Services_Twilio($this->_id['sid'], $this->_id['at']);
 		//param取得
 		if (!empty($_GET)) {
 			foreach ($_GET as $key => $value) {
@@ -34,7 +29,12 @@ class TwilioUtil{
 		error_log(print_r($this->_param_get, true));
 		error_log(print_r($this->_param_post, true));
 		
-		//
+		//sid,at取得
+		$this->_config = new config();
+		$to = $this->getParam('To');
+		$this->_id = $this->_config->getTwilioId($to);
+		//twilioインスタンス取得
+		$this->_client = new Services_Twilio($this->_id['sid'], $this->_id['at']);
 	}
 		
 	//パラメータ取得
