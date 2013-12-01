@@ -8,7 +8,7 @@ $digits = $logic->getParam('Digits');
 switch (true) {
 	
 	//録音しなおし
-	case $digits === '1':
+	case $digits === '9':
 		$from = $logic->getParam('From');
 		//log取得
 		$log = $logic->getLogOneByPhoneNumber($from);
@@ -26,7 +26,7 @@ switch (true) {
 		break;
 	
 	//終了
-	case $digits === '9':
+	case $digits === '1':
 		$response = $logic->finish();
 		echo $response;
 		break;

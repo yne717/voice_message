@@ -7,14 +7,14 @@ $digits = $logic->getParam('Digits');
 
 switch (true) {
 	//もう一度録音
-	case $digits === '1':
+	case $digits === '9':
 		
 		header("HTTP/1.1 301 Moved Permanently");
 		header('Location: http://' . $_SERVER['SERVER_NAME'] . '/VM/index.php?again=1');
 		break;
 	
-	//終了
-	case $digits === '9':
+	//メッセージ登録
+	case $digits === '1':
 		
 		//番号取得
 		$from = $logic->getParam('From');

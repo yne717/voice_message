@@ -66,7 +66,7 @@ class TwilioLogic extends TwilioUtil{
 			$message = $this->default_start_message;
 		}
 		
-		$response->say($message . "はっしんおんのあとに、おなまえ、メッセージをおねがいします。かんりょうしましたらシャープをおしてしゅうりょうしてくださいね。ではどうぞ。", array('language' => 'ja-jp'));
+		$response->say($message . "はっしんおんのあとに、おなまえ、メッセージをおねがいします。かんりょうしましたら、シャープ、をおしてしゅうりょうしてくださいね。ではどうぞ。", array('language' => 'ja-jp'));
 		$response->record(array('maxLength' => '30', 'finishOnKey' => '#', 'action' => '/VM/completed_record.php'));
 		$response->say("タイムアウトしました。もういちどさいしょからおねがいいたします。", array('language' => 'ja-jp'));
 		$response->hangup();
@@ -76,7 +76,7 @@ class TwilioLogic extends TwilioUtil{
 	//index.php　再度録音開始コンタクト
 	public function indexAgain() {
 		$response = $this->getTwiml();
-		$response->say("はっしんおんのあとに、おなまえ、メッセージをおねがいします。ろくおんがかんりょうしましたらシャープをおしてしゅうりょうしてくださいね。それではどうぞ。", array('language' => 'ja-jp'));
+		$response->say("はっしんおんのあとに、おなまえ、メッセージをおねがいします。ろくおんがかんりょうしましたら、シャープ、をおしてしゅうりょうしてくださいね。それではどうぞ。", array('language' => 'ja-jp'));
 		$response->record(array('maxLength' => '30', 'finishOnKey' => '#', 'action' => '/VM/completed_record.php'));
 		$response->say("タイムアウトしました。もういちどさいしょからおねがいいたします。", array('language' => 'ja-jp'));
 		$response->hangup();
@@ -86,7 +86,7 @@ class TwilioLogic extends TwilioUtil{
 	public function indexRecordPlayCheck() {
 		$response = $this->getTwiml();
 		$gather = $response->gather(array('numDigits' => 1, 'timeout' => '10', 'action' => "/VM/play_record.php"));
-		$gather->say("おでんわありがとうございます。おあずかりしているメッセージをかくにんするばあいは1を、ろくおんしなおすばあいは9をおしてください。しゅうりょうするばあいはそのままでんわをおきりください。", array('language' => 'ja-jp'));
+		$gather->say("おでんわありがとうございます。おあずかりしているメッセージをかくにんするばあいは、1、を、ろくおんしなおすばあいは、9、をおしてください。しゅうりょうするばあいはそのままでんわをおきりください。", array('language' => 'ja-jp'));
 		$response->say("タイムアウトしました。もういちどさいしょからおねがいいたします。", array('language' => 'ja-jp'));
 		$response->hangup();
 		return $response;
@@ -96,7 +96,7 @@ class TwilioLogic extends TwilioUtil{
 		$response = $this->getTwiml();
 		$response->play($url);
 		$gather = $response->gather(array('numDigits' => 1, 'timeout' => '10', 'action' => "/VM/play_record_after.php"));
-		$gather->say("メッセージをろくおんしなおすばあいは1を、しゅうりょうするばあいは9をおしてください。", array('language' => 'ja-jp'));
+		$gather->say("しゅうりょうするばあいは、1、を、メッセージをろくおんしなおすばあいは、9、をおしてください。", array('language' => 'ja-jp'));
 		$response->say("タイムアウトしました。もういちどさいしょからおねがいいたします。", array('language' => 'ja-jp'));
 		$response->hangup();
 		return $response;
@@ -107,7 +107,7 @@ class TwilioLogic extends TwilioUtil{
 	public function completedRecordCheack() {
 		$response = $this->getTwiml();
 		$gather = $response->gather(array('numDigits' => 1, 'timeout' => '10', 'action' => "/VM/completed_record_after.php"));
-		$gather->say("ろくおんがかんりょうしました。メッセージをろくおんしなおすばあいは1を、とうろくするばあいは9をおしてください", array('language' => 'ja-jp'));
+		$gather->say("ろくおんがかんりょうしました。とうろくするばあいは、1、を、メッセージをろくおんしなおすばあいは、9、をおしてください", array('language' => 'ja-jp'));
 		$response->say("タイムアウトしました。もういちどさいしょからおねがいいたします。", array('language' => 'ja-jp'));
 		$response->hangup();
 		return $response;
