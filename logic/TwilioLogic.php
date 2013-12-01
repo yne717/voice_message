@@ -58,9 +58,15 @@ class TwilioLogic extends TwilioUtil{
 	public function index() {
 		$response = $this->getTwiml();
 		
+		$from = $this->getParam('From');
+		$message = '';
+		if ($this->sp_phone_number_start[$from]) {
+			$message = $this->sp_phone_number_start[$from];
+		} else {
+			$message = $this->default_start_message;
+		}
 		
-		
-		$response->say("はっしんおんのあとに、おなまえ、メッセージをおねがいします。かんりょうしましたらシャープをおしてしゅうりょうしてくださいね。ではどうぞ。", array('language' => 'ja-jp'));
+		$response->say($message . "はっしんおんのあとに、おなまえ、メッセージをおねがいします。かんりょうしましたらシャープをおしてしゅうりょうしてくださいね。ではどうぞ。", array('language' => 'ja-jp'));
 		$response->record(array('maxLength' => '30', 'finishOnKey' => '#', 'action' => '/VM/completed_record.php'));
 		$response->say("タイムアウトしました。もういちどさいしょからおねがいいたします。", array('language' => 'ja-jp'));
 		$response->hangup();
@@ -111,10 +117,15 @@ class TwilioLogic extends TwilioUtil{
 	public function completedRecordEnd() {
 		$response = $this->getTwiml();
 		
+		$from = $this->getParam('From');
+		$message = '';
+		if ($this->sp_phone_number_end[$from]) {
+			$message = $this->sp_phone_number_end[$from];
+		} else {
+			$message = $this->default_end_message;
+		}
 		
-		
-		
-		$response->say("あなたのメッセージはごじつ、おふたりにおとどけいたします。ごきょうりょくありがとうございました。", array('language' => 'ja-jp'));
+		$response->say($message, array('language' => 'ja-jp'));
 		$response->hangup();
 		return $response;
 	}

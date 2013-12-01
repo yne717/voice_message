@@ -41,6 +41,10 @@ class Config {
 		return $db_param;
 	}
 	public function getSpPhoneNumber() {
+		$sp_phone_number['start'] = $this->sp_phone_number_start;
+		$sp_phone_number['end'] = $this->sp_phone_number_end;
+		
+		return $sp_phone_number;
 		
 	}
 }
