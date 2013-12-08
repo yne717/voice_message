@@ -60,7 +60,7 @@ class TwilioLogic extends TwilioUtil{
 		
 		$from = $this->getParam('From');
 		$message = '';
-		if ($this->sp_phone_number_start[$from]) {
+		if (!empty($this->sp_phone_number_start[$from])) {
 			$message = $this->sp_phone_number_start[$from];
 		} else {
 			$message = $this->default_start_message;
@@ -119,7 +119,7 @@ class TwilioLogic extends TwilioUtil{
 		
 		$from = $this->getParam('From');
 		$message = '';
-		if ($this->sp_phone_number_end[$from]) {
+		if (!empty($this->sp_phone_number_end[$from])) {
 			$message = $this->sp_phone_number_end[$from];
 		} else {
 			$message = $this->default_end_message;
