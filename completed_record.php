@@ -19,9 +19,10 @@ if (!empty($digits) && $digits === '#') {
 	echo $response;
 	
 } else {
-
+	
 	$response = $logic->errorRecordComplete();
 	error_log('<error> completed_record');
+	error_log(print_r($logic->getParamAll(), true));
 	echo $response;
 	
 }

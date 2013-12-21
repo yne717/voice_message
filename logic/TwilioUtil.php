@@ -47,6 +47,10 @@ class TwilioUtil{
 		return $result;
 	}
 	
+	public function getParamAll() {
+			return $this->_param;
+	}
+	
 	public function getTwiml() {
 		return new Services_Twilio_Twiml();
 	}
