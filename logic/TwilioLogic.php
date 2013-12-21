@@ -38,6 +38,15 @@ class TwilioLogic extends TwilioUtil{
 		return $response;
 	}
 	
+	public function errorRecordComplete() {
+		$response = $this->getTwiml();
+		$response->say("エラーがはっせいしましたのでしゅうりょういたします。メッセージを登録する場合はシャープ、をおしてください。", array('language' => 'ja-jp'));
+		$response->hangup();
+		error_log('<error> function error errorRecordComplete');
+		
+		return $response;
+	}
+	
 	public function finish() {
 		$response = $this->getTwiml();
 		$response->hangup();
@@ -66,7 +75,7 @@ class TwilioLogic extends TwilioUtil{
 			$message = $this->default_start_message;
 		}
 		
-		$response->say($message . "はっしんおんのあとに、おなまえ、メッセージをおねがいします。かんりょうしましたら、シャープ、をおしてしゅうりょうしてくださいね。ではどうぞ。", array('language' => 'ja-jp'));
+		$response->say($message . "はっしんおんのあとに、おなまえ、メッセージをおねがいします。かんりょうしましたら、シャープ、をおしてとうろくしてくださいね。ではどうぞ。", array('language' => 'ja-jp'));
 		$response->record(array('maxLength' => '30', 'finishOnKey' => '#', 'action' => '/VM/completed_record.php'));
 		$response->say("タイムアウトしました。もういちどさいしょからおねがいいたします。", array('language' => 'ja-jp'));
 		$response->hangup();
@@ -76,7 +85,7 @@ class TwilioLogic extends TwilioUtil{
 	//index.php　再度録音開始コンタクト
 	public function indexAgain() {
 		$response = $this->getTwiml();
-		$response->say("はっしんおんのあとに、おなまえ、メッセージをおねがいします。ろくおんがかんりょうしましたら、シャープ、をおしてしゅうりょうしてくださいね。それではどうぞ。", array('language' => 'ja-jp'));
+		$response->say("はっしんおんのあとに、おなまえ、メッセージをおねがいします。ろくおんがかんりょうしましたら、シャープ、をおしてとうろくしてくださいね。それではどうぞ。", array('language' => 'ja-jp'));
 		$response->record(array('maxLength' => '30', 'finishOnKey' => '#', 'action' => '/VM/completed_record.php'));
 		$response->say("タイムアウトしました。もういちどさいしょからおねがいいたします。", array('language' => 'ja-jp'));
 		$response->hangup();

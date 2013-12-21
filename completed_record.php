@@ -20,7 +20,7 @@ if (!empty($digits) && $digits === '#') {
 	
 } else {
 
-	$response = $logic->error();
+	$response = $logic->errorRecordComplete();
 	error_log('<error> completed_record');
 	echo $response;
 	
