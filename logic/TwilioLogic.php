@@ -12,6 +12,8 @@ class TwilioLogic extends TwilioUtil{
 	public $default_end_message = 'あなたのメッセージはごじつ、おふたりにおとどけいたします。ごきょうりょくありがとうございました。';
 	public $sp_phone_number_start = array();
 	public $sp_phone_number_end = array();
+	public $default_time = 60;
+	public $sp_time = 300;
 
 	
 	function __construct(){
@@ -69,14 +71,17 @@ class TwilioLogic extends TwilioUtil{
 		
 		$from = $this->getParam('From');
 		$message = '';
+		$time = '';
 		if (!empty($this->sp_phone_number_start[$from])) {
 			$message = $this->sp_phone_number_start[$from];
+			$time = $this->sp_time;
 		} else {
 			$message = $this->default_start_message;
+			$time = $this->default_time;
 		}
 		
 		$response->say($message . "はっしんおんのあとに、おなまえ、メッセージをおねがいします。かんりょうしましたら、シャープ、をおしてとうろくしてくださいね。ではどうぞ。", array('language' => 'ja-jp'));
-		$response->record(array('maxLength' => '30', 'finishOnKey' => '#', 'action' => '/VM/completed_record.php'));
+		$response->record(array('maxLength' => $time, 'timeout' => 10, 'finishOnKey' => '#', 'action' => '/VM/completed_record.php'));
 		$response->say("タイムアウトしました。もういちどさいしょからおねがいいたします。", array('language' => 'ja-jp'));
 		$response->hangup();
 		return $response;
@@ -85,8 +90,16 @@ class TwilioLogic extends TwilioUtil{
 	//index.php　再度録音開始コンタクト
 	public function indexAgain() {
 		$response = $this->getTwiml();
+		
+		$time = '';
+		if (!empty($this->sp_phone_number_start[$from])) {
+			$time = $this->sp_time;
+		} else {
+			$time = $this->default_time;
+		}
+		
 		$response->say("はっしんおんのあとに、おなまえ、メッセージをおねがいします。ろくおんがかんりょうしましたら、シャープ、をおしてとうろくしてくださいね。それではどうぞ。", array('language' => 'ja-jp'));
-		$response->record(array('maxLength' => '30', 'finishOnKey' => '#', 'action' => '/VM/completed_record.php'));
+		$response->record(array('maxLength' => $time, 'timeout' => 10, 'finishOnKey' => '#', 'action' => '/VM/completed_record.php'));
 		$response->say("タイムアウトしました。もういちどさいしょからおねがいいたします。", array('language' => 'ja-jp'));
 		$response->hangup();
 		return $response;
