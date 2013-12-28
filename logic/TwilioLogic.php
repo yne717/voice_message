@@ -90,6 +90,7 @@ class TwilioLogic extends TwilioUtil{
 	//index.php　再度録音開始コンタクト
 	public function indexAgain() {
 		$response = $this->getTwiml();
+		$from = $this->getParam('From');
 		
 		$time = '';
 		if (!empty($this->sp_phone_number_start[$from])) {
