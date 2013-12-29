@@ -12,7 +12,7 @@ class TwilioLogic extends TwilioUtil{
 	public $default_end_message = 'あなたのメッセージはごじつ、おふたりにおとどけいたします。ごきょうりょくありがとうございました。';
 	public $sp_phone_number_start = array();
 	public $sp_phone_number_end = array();
-	public $default_time = 60;
+	public $default_time = 300;
 	public $sp_time = 300;
 
 	
